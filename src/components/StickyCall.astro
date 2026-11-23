@@ -1,7 +1,8 @@
 ---
+import Icon from './Icon.astro';
 import { SITE } from '../data/site';
 ---
-<div class="fixed inset-x-0 bottom-0 z-50 grid grid-cols-2 border-t-2 border-navy-950 shadow-[0_-8px_24px_rgba(13,17,56,.25)] lg:hidden">
-  <a href={SITE.phoneHref} class="bg-navy-900 py-3.5 text-center font-display text-lg font-semibold text-white">Call Now</a>
-  <a href="/contact/" class="bg-red-600 py-3.5 text-center font-display text-lg font-semibold text-white">Get Estimate</a>
+<div class="fixed inset-x-0 bottom-0 z-50 grid grid-cols-2 border-t border-white/15 bg-navy-950 shadow-[0_-8px_24px_rgba(8,17,33,0.35)] lg:hidden">
+  <a href={SITE.phoneHref} class="flex items-center justify-center gap-2 py-3.5 font-display text-base font-bold text-white"><Icon name="phone" class="h-4 w-4 text-blue-200" />Call Now</a>
+  <a href="/contact/" class="flex items-center justify-center gap-2 bg-red-600 py-3.5 font-display text-base font-bold text-white">Get Estimate</a>
 </div>

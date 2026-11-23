@@ -8,27 +8,31 @@ const { kicker, title, text, image, imageAlt = '', crumbs = [] } = Astro.props;
   <div class="container-x grid items-center gap-14 py-16 sm:py-24 lg:grid-cols-12">
     <div class:list={[image ? 'lg:col-span-7' : 'lg:col-span-9']}>
       {crumbs.length > 0 && (
-        <nav aria-label="Breadcrumb" class="mb-7 flex flex-wrap items-center gap-2 text-sm text-white/60">
-          {crumbs.map((c: { name: string; href?: string }, i: number) => (
-            <span class="flex items-center gap-2">{i > 0 && <span class="text-white/30">/</span>}{c.href ? <a class="hover:text-white" href={c.href}>{c.name}</a> : <span class="text-white/90">{c.name}</span>}</span>
+        <nav aria-label="Breadcrumb" class="mb-6 flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-wider text-blue-200/70">
+          <a class="hover:text-white" href="/">Home</a>
+          {crumbs.map((c: { name: string; href?: string }) => (
+            <span class="flex items-center gap-2">
+              <span class="text-white/30">/</span>
+              {c.href ? <a class="hover:text-white" href={c.href}>{c.name}</a> : <span class="text-white">{c.name}</span>}
+            </span>
           ))}
         </nav>
       )}
-      {kicker && <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white/90 backdrop-blur"><Icon name="shield" class="h-4 w-4" />{kicker}</p>}
+      {kicker && <p class="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white ring-1 ring-white/20 backdrop-blur-sm"><Icon name="shield" class="h-3.5 w-3.5 text-red-500" />{kicker}</p>}
       <h1 class="!text-white">{title}</h1>
-      {text && <p class="mt-6 max-w-2xl text-lg leading-relaxed text-white/75">{text}</p>}
-      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-        <a href="/contact/" class="btn btn-red shadow-lg shadow-red-600/30">Get an estimate</a>
+      {text && <p class="mt-6 max-w-2xl text-lg leading-relaxed text-blue-100/85">{text}</p>}
+      <div class="mt-9 flex flex-col gap-3.5 sm:flex-row">
+        <a href="/contact/" class="btn btn-red">Get an estimate</a>
         <a href={SITE.phoneHref} class="btn btn-ghost"><Icon name="phone" class="h-4 w-4" />{SITE.phone}</a>
       </div>
     </div>
     {image && (
       <div class="relative lg:col-span-5">
-        <div class="absolute -inset-3 rounded-[28px] bg-white/10 blur-sm"></div>
-        <img src={image} alt={imageAlt} width="1200" height="1200" loading="eager" class="relative aspect-[4/3] w-full rounded-2xl object-cover shadow-2xl shadow-black/40 ring-1 ring-white/20" />
-        <div class="absolute -bottom-5 left-5 flex items-center gap-3 rounded-xl bg-white px-4 py-3 text-navy-950 shadow-xl">
-          <span class="icon-chip !h-10 !w-10"><Icon name="check" class="h-5 w-5" /></span>
-          <span class="text-sm leading-tight"><strong class="block">USPS-approved vendor</strong><span class="text-slate-500">License #{SITE.license}</span></span>
+        <div class="absolute -inset-2 rounded-2xl bg-gradient-to-tr from-blue-700 to-red-600 opacity-25 blur-xl"></div>
+        <img src={image} alt={imageAlt} width="1200" height="1200" loading="eager" class="relative aspect-[4/3] w-full rounded-2xl object-cover shadow-2xl shadow-black/40 ring-1 ring-white/15" />
+        <div class="absolute -bottom-5 left-5 flex items-center gap-3 rounded-xl bg-white px-4 py-3 text-navy-950 shadow-xl ring-1 ring-slate-100">
+          <span class="icon-chip-red !h-10 !w-10"><Icon name="check" class="h-5 w-5" /></span>
+          <span class="text-sm leading-tight"><strong class="block">USPS-approved vendor</strong><span class="text-slate-500">CA License #{SITE.license}</span></span>
         </div>
       </div>
     )}

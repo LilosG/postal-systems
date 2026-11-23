@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import FaqList from '../../components/FaqList.astro';
 import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
 import { AREAS, SERVICES, SITE, STATS, getArea } from '../../data/site';
 export function getStaticPaths() { return AREAS.map((a) => ({ params: { slug: a.slug }, props: { a } })); }
 const { a } = Astro.props;
@@ -17,7 +18,7 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEnti
 const nearby = a.nearby.map(getArea);
 ---
 <Base title={`Commercial Mailbox Installation ${a.name} | Postal Systems`} description={`USPS-approved mailbox installation, CBU, 4C, parcel lockers and repairs in ${place}. California License #${SITE.license}. Get a fast estimate.`} crumbs={crumbs} schema={schema}>
-  <PageHero kicker={a.type === 'county' ? 'Select projects' : 'Local service'} title={`Mailbox installation & repair in ${a.name}`} text={`Postal Systems supplies, installs and repairs USPS-approved mailbox systems in ${a.name} for apartments, HOAs, builders and commercial properties, with USPS coordination included.`} crumbs={crumbs} />
+  <PageHero kicker={a.type === 'county' ? 'Select projects' : `Local service • ${a.region}`} title={`Mailbox installation & repair in ${a.name}`} text={`Postal Systems supplies, installs and repairs USPS-approved mailbox systems in ${a.name} for apartments, HOAs, builders and commercial properties, with USPS coordination included.`} crumbs={crumbs} />
 
   <section class="section">
     <div class="container-x">
@@ -25,10 +26,13 @@ const nearby = a.nearby.map(getArea);
       <h2 class="mt-2">Mailbox services available in {a.name}</h2>
       <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {SERVICES.map((s) => (
-          <a href={a.deep ? `/service-areas/${a.slug}/${s.slug}/` : `/services/${s.slug}/`} class="card">
-            <h3>{s.name}</h3>
-            <p class="mt-2 text-slate-600">{s.short}</p>
-            <span class="mt-4 inline-block font-display text-lg font-semibold text-red-600">{s.name} in {a.name} &rarr;</span>
+          <a href={a.deep ? `/service-areas/${a.slug}/${s.slug}/` : `/services/${s.slug}/`} class="card group flex flex-col justify-between">
+            <div>
+              <span class="icon-chip-red"><Icon name="shield" /></span>
+              <h3 class="mt-5 text-xl group-hover:text-blue-700">{s.name}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-slate-600">{s.short}</p>
+            </div>
+            <span class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-red-600 transition group-hover:gap-3">{s.name} in {a.name} <Icon name="arrow" class="h-4 w-4" /></span>
           </a>
         ))}
       </div>
@@ -36,17 +40,20 @@ const nearby = a.nearby.map(getArea);
   </section>
 
   {a.project && (
-    <section class="bg-navy-900 py-12 text-white">
-      <div class="container-x">
-        <p class="eyebrow !text-red-500">Local project</p>
-        <h2 class="mt-2 !text-white text-3xl">{a.project.title}</h2>
-        <p class="mt-2 text-lg text-white/80">{a.project.note}</p>
+    <section class="navy-bg py-14 text-white">
+      <div class="container-x flex flex-col justify-between gap-6 md:flex-row md:items-center">
+        <div>
+          <p class="eyebrow !text-red-400">Completed Local Project</p>
+          <h2 class="mt-2 !text-white text-3xl">{a.project.title}</h2>
+          <p class="mt-2 text-lg text-blue-100/80">{a.project.note}</p>
+        </div>
+        <a href="/projects/" class="btn btn-ghost shrink-0">View recent projects</a>
       </div>
     </section>
   )}
 
-  <section class="section bg-blue-50/60">
-    <div class="container-x grid gap-10 lg:grid-cols-12">
+  <section class="section bg-slate-50/60">
+    <div class="container-x grid gap-12 lg:grid-cols-12">
       <div class="lg:col-span-7">
         <p class="eyebrow">Why Postal Systems</p>
         <h2 class="mt-2">One vendor from quote to USPS sign-off</h2>
@@ -54,11 +61,30 @@ const nearby = a.nearby.map(getArea);
           <p>Property owners and managers in {a.name} call us when mailboxes are damaged, non-compliant or due for replacement. We handle the hardware, the pad and anchors, tenant notice and the postal service, so the project is finished once.</p>
           <p>We are a USPS-approved vendor and a California licensed contractor (License #{SITE.license}).</p>
         </div>
-        <div class="mt-6 grid grid-cols-2 gap-4">{STATS.map((s) => <div class="border-l-4 border-red-600 bg-white p-4"><p class="font-display text-4xl font-bold text-red-600">{s.value}</p><p class="text-slate-600">{s.label}</p></div>)}</div>
+        <div class="mt-8 grid grid-cols-2 gap-4">
+          {STATS.map((s) => (
+            <div class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs">
+              <p class="font-display text-3xl font-bold text-blue-700">{s.value}</p>
+              <p class="mt-1 text-sm font-medium text-slate-600">{s.label}</p>
+            </div>
+          ))}
+        </div>
       </div>
       <aside class="lg:col-span-5">
-        <h3>Nearby areas we serve</h3>
-        <ul class="mt-4 space-y-2">{nearby.map((n) => <li><a class="font-display text-xl font-semibold text-navy-900 hover:text-red-600" href={`/service-areas/${n.slug}/`}>Mailbox installation in {n.name} &rarr;</a></li>)}</ul>
+        <div class="card">
+          <p class="eyebrow">Regional Coverage</p>
+          <h3 class="mt-2">Nearby areas we serve</h3>
+          <ul class="mt-5 space-y-3">
+            {nearby.map((n) => (
+              <li>
+                <a class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/70 px-4 py-3 font-display text-base font-bold text-navy-950 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700" href={`/service-areas/${n.slug}/`}>
+                  <span>Mailbox installation in {n.name}</span>
+                  <Icon name="arrow" class="h-4 w-4 text-red-600" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </aside>
     </div>
   </section>

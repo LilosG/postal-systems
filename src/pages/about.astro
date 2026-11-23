@@ -8,15 +8,21 @@ const crumbs = [{ name: 'About' }];
 <Base title="About Postal Systems | USPS-Approved Mailbox Vendor San Diego" description={`Postal Systems is a USPS-approved vendor and California licensed contractor (License #${SITE.license}) based in San Diego, supplying, installing and repairing mailboxes.`} crumbs={crumbs}>
   <PageHero kicker="About us" title="San Diego's USPS-approved mailbox specialists" text="Supply, installation and repair from one licensed contractor." image={IMAGES.oceanside} imageAlt="Postal Systems mailbox installation" crumbs={crumbs} />
   <section class="section">
-    <div class="container-x grid gap-12 lg:grid-cols-12">
+    <div class="container-x grid items-start gap-12 lg:grid-cols-12">
       <div class="prose-copy lg:col-span-7">
+        <p class="eyebrow mb-2">Our Approach</p>
         <h2 class="mb-6">One vendor for mailbox supply, installation and repair</h2>
         <p>Postal Systems is a USPS-approved vendor and a California licensed contractor (License #{SITE.license}), based in {SITE.base}. We supply all types of commercial and residential mailboxes and install them to USPS requirements.</p>
         <p>We work with USPS to attach those mailboxes to the postal service system, so your project ends with working delivery instead of loose ends. When something breaks, we repair, replace and re-key existing systems.</p>
         <p>Our goal is simple: the right mailbox products, proper installation and USPS registration, all on the first try, for one price.</p>
       </div>
-      <div class="grid grid-cols-2 gap-4 lg:col-span-5">
-        {STATS.map((s) => <div class="border-l-4 border-red-600 bg-blue-50/60 p-6"><p class="font-display text-5xl font-bold text-red-600">{s.value}</p><p class="font-display text-lg text-navy-900">{s.label}</p></div>)}
+      <div class="grid grid-cols-2 gap-5 lg:col-span-5">
+        {STATS.map((s) => (
+          <div class="card !p-6">
+            <p class="font-display text-4xl font-bold text-blue-700">{s.value}</p>
+            <p class="mt-1.5 text-sm font-semibold text-slate-600">{s.label}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>

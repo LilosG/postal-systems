@@ -3,6 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import PageHero from '../../../components/PageHero.astro';
 import FaqList from '../../../components/FaqList.astro';
 import CtaBand from '../../../components/CtaBand.astro';
+import Icon from '../../../components/Icon.astro';
 import { SERVICES, DEEP_AREAS, SITE, PROCESS, getArea, getProduct } from '../../../data/site';
 
 export function getStaticPaths() {
@@ -24,7 +25,7 @@ const nearby = a.nearby.map(getArea);
 const otherServices = SERVICES.filter((x) => x.slug !== s.slug);
 ---
 <Base title={`${s.name} in ${a.name}, CA | Postal Systems`} description={`${s.short} Serving ${a.name} and nearby areas. USPS-approved vendor, License #${SITE.license}.`} crumbs={crumbs} schema={schema} image={s.image}>
-  <PageHero kicker={`${a.name}, CA`} title={`${s.h1} in ${a.name}`} text={`${s.intro}`} image={s.image} imageAlt={`${s.name} in ${a.name}`} crumbs={crumbs} />
+  <PageHero kicker={`${a.name}, CA • ${a.region}`} title={`${s.h1} in ${a.name}`} text={`${s.intro}`} image={s.image} imageAlt={`${s.name} in ${a.name}`} crumbs={crumbs} />
 
   <section class="section">
     <div class="container-x grid gap-12 lg:grid-cols-12">
@@ -32,27 +33,47 @@ const otherServices = SERVICES.filter((x) => x.slug !== s.slug);
         <p class="eyebrow">What's included in {a.name}</p>
         <h2 class="mt-2">{s.name} for {a.name} properties</h2>
         <ul class="mt-8 grid gap-4 sm:grid-cols-2">
-          {s.includes.map((i: string) => <li class="flex gap-3 border border-blue-100 bg-blue-50/50 p-4 text-lg font-medium text-navy-900"><span class="mt-2 h-2.5 w-2.5 shrink-0 bg-red-600"></span>{i}</li>)}
+          {s.includes.map((i: string) => (
+            <li class="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white p-4 text-base font-semibold text-navy-950 shadow-xs">
+              <Icon name="check" class="mt-0.5 h-5 w-5 shrink-0 text-red-600" />
+              <span>{i}</span>
+            </li>
+          ))}
         </ul>
-        <p class="mt-8 text-lg text-slate-600"><strong class="text-ink">Best for:</strong> {s.bestFor}</p>
-        {a.project && <p class="mt-4 border-l-4 border-red-600 bg-blue-50/60 p-4 text-slate-600"><strong class="text-ink">Recent work near you:</strong> {a.project.title}. {a.project.note}</p>}
+        <div class="mt-8 rounded-2xl border border-blue-100 bg-blue-50/60 p-6 text-base text-slate-700">
+          <strong class="text-navy-950">Best for:</strong> {s.bestFor}
+        </div>
+        {a.project && (
+          <div class="mt-4 rounded-2xl border border-red-100 bg-red-50/60 p-6 text-base text-slate-700">
+            <strong class="text-navy-950">Recent work near you:</strong> {a.project.title}. {a.project.note}
+          </div>
+        )}
       </div>
       <aside class="lg:col-span-5">
-        <div class="bg-navy-900 p-8 text-white">
-          <h3 class="!text-white">Related products</h3>
-          <ul class="mt-4 space-y-3">{s.productSlugs.map((p: string) => { const pr = getProduct(p); return <li><a class="block border-b border-white/15 pb-3 font-display text-xl hover:text-red-500" href={`/products/${pr.slug}/`}>{pr.name} &rarr;</a></li>; })}</ul>
-          <a href="/contact/" class="btn btn-red mt-6 w-full">Get an estimate</a>
+        <div class="navy-bg rounded-2xl p-8 text-white shadow-xl">
+          <p class="text-xs font-bold uppercase tracking-wider text-blue-200">USPS-Approved Hardware</p>
+          <h3 class="mt-2 !text-white">Related products</h3>
+          <ul class="mt-5 space-y-3">
+            {s.productSlugs.map((p: string) => { const pr = getProduct(p); return <li><a class="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 font-display text-lg font-semibold transition hover:border-white/25 hover:bg-white/10" href={`/products/${pr.slug}/`}><span>{pr.name}</span><Icon name="arrow" class="h-4 w-4 text-red-400" /></a></li>; })}
+          </ul>
+          <a href="/contact/" class="btn btn-red mt-7 w-full">Get an estimate in {a.name}</a>
         </div>
       </aside>
     </div>
   </section>
 
-  <section class="section bg-blue-50/60">
+  <section class="section border-y border-slate-100 bg-slate-50/60">
     <div class="container-x">
       <p class="eyebrow">Our process</p>
       <h2 class="mt-2">How a {a.name} project runs</h2>
       <ol class="mt-10 grid gap-6 md:grid-cols-5">
-        {PROCESS.map((p, i) => <li class="border-t-4 border-red-600 bg-white p-5"><p class="font-display text-4xl font-bold text-blue-100">0{i + 1}</p><h3 class="text-xl">{p.title}</h3><p class="mt-2 text-slate-600">{p.text}</p></li>)}
+        {PROCESS.map((p, i) => (
+          <li class="card !p-6">
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-red-50 font-display text-sm font-bold text-red-600">0{i + 1}</span>
+            <h3 class="mt-4 text-lg">{p.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600">{p.text}</p>
+          </li>
+        ))}
       </ol>
     </div>
   </section>
@@ -64,17 +85,21 @@ const otherServices = SERVICES.filter((x) => x.slug !== s.slug);
     </div>
   </section>
 
-  <section class="section bg-blue-50/60 !py-12">
-    <div class="container-x grid gap-10 md:grid-cols-2">
-      <div>
-        <h3>More services in {a.name}</h3>
-        <ul class="mt-4 space-y-2">{otherServices.map((o) => <li><a class="font-display text-xl font-semibold text-navy-900 hover:text-red-600" href={`/service-areas/${a.slug}/${o.slug}/`}>{o.name} in {a.name} &rarr;</a></li>)}</ul>
+  <section class="section border-t border-slate-100 bg-slate-50/60 !py-16">
+    <div class="container-x grid gap-8 md:grid-cols-2">
+      <div class="card">
+        <p class="eyebrow">Local Services</p>
+        <h3 class="mt-2">More services in {a.name}</h3>
+        <ul class="mt-5 space-y-2.5">
+          {otherServices.map((o) => <li><a class="inline-flex items-center gap-2 font-display text-base font-bold text-navy-950 transition hover:text-blue-700" href={`/service-areas/${a.slug}/${o.slug}/`}>{o.name} in {a.name} <span class="text-red-600">&rarr;</span></a></li>)}
+        </ul>
       </div>
-      <div>
-        <h3>{s.name} nearby</h3>
-        <ul class="mt-4 space-y-2">
-          {nearby.map((n) => <li><a class="font-display text-xl font-semibold text-navy-900 hover:text-red-600" href={n.deep ? `/service-areas/${n.slug}/${s.slug}/` : `/service-areas/${n.slug}/`}>{s.name} in {n.name} &rarr;</a></li>)}
-          <li><a class="font-display text-xl font-semibold text-red-600" href={`/service-areas/${a.slug}/`}>All {a.name} services &rarr;</a></li>
+      <div class="card">
+        <p class="eyebrow">Nearby Locations</p>
+        <h3 class="mt-2">{s.name} nearby</h3>
+        <ul class="mt-5 space-y-2.5">
+          {nearby.map((n) => <li><a class="inline-flex items-center gap-2 font-display text-base font-bold text-navy-950 transition hover:text-blue-700" href={n.deep ? `/service-areas/${n.slug}/${s.slug}/` : `/service-areas/${n.slug}/`}>{s.name} in {n.name} <span class="text-red-600">&rarr;</span></a></li>)}
+          <li class="pt-2"><a class="inline-flex items-center gap-2 font-display text-base font-bold text-red-600 hover:text-red-700" href={`/service-areas/${a.slug}/`}>All {a.name} services &rarr;</a></li>
         </ul>
       </div>
     </div>
