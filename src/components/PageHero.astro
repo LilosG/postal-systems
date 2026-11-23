@@ -1,28 +1,35 @@
 ---
+import Icon from './Icon.astro';
 import { SITE } from '../data/site';
 const { kicker, title, text, image, imageAlt = '', crumbs = [] } = Astro.props;
 ---
-<section class="bg-navy-900 text-white">
-  <div class="container-x grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-12">
+<section class="hero-bg relative isolate overflow-hidden text-white">
+  <div class="door-grid absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black,transparent_90%)]"></div>
+  <div class="container-x grid items-center gap-14 py-16 sm:py-24 lg:grid-cols-12">
     <div class:list={[image ? 'lg:col-span-7' : 'lg:col-span-9']}>
       {crumbs.length > 0 && (
-        <nav aria-label="Breadcrumb" class="mb-6 text-sm text-white/60">
+        <nav aria-label="Breadcrumb" class="mb-7 flex flex-wrap items-center gap-2 text-sm text-white/60">
           {crumbs.map((c: { name: string; href?: string }, i: number) => (
-            <span>{i > 0 && <span class="mx-2">/</span>}{c.href ? <a class="hover:text-white" href={c.href}>{c.name}</a> : <span class="text-white/90">{c.name}</span>}</span>
+            <span class="flex items-center gap-2">{i > 0 && <span class="text-white/30">/</span>}{c.href ? <a class="hover:text-white" href={c.href}>{c.name}</a> : <span class="text-white/90">{c.name}</span>}</span>
           ))}
         </nav>
       )}
-      {kicker && <p class="eyebrow !text-white/60 mb-4">{kicker}</p>}
+      {kicker && <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white/90 backdrop-blur"><Icon name="shield" class="h-4 w-4" />{kicker}</p>}
       <h1 class="!text-white">{title}</h1>
       {text && <p class="mt-6 max-w-2xl text-lg leading-relaxed text-white/75">{text}</p>}
       <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-        <a href="/contact/" class="btn btn-red">Get an estimate</a>
-        <a href={SITE.phoneHref} class="btn btn-ghost">Call {SITE.phone}</a>
+        <a href="/contact/" class="btn btn-red shadow-lg shadow-red-600/30">Get an estimate</a>
+        <a href={SITE.phoneHref} class="btn btn-ghost"><Icon name="phone" class="h-4 w-4" />{SITE.phone}</a>
       </div>
     </div>
     {image && (
-      <div class="lg:col-span-5">
-        <img src={image} alt={imageAlt} width="1200" height="1200" loading="eager" class="aspect-[4/3] w-full rounded-2xl object-cover shadow-2xl shadow-black/30" />
+      <div class="relative lg:col-span-5">
+        <div class="absolute -inset-3 rounded-[28px] bg-white/10 blur-sm"></div>
+        <img src={image} alt={imageAlt} width="1200" height="1200" loading="eager" class="relative aspect-[4/3] w-full rounded-2xl object-cover shadow-2xl shadow-black/40 ring-1 ring-white/20" />
+        <div class="absolute -bottom-5 left-5 flex items-center gap-3 rounded-xl bg-white px-4 py-3 text-navy-950 shadow-xl">
+          <span class="icon-chip !h-10 !w-10"><Icon name="check" class="h-5 w-5" /></span>
+          <span class="text-sm leading-tight"><strong class="block">USPS-approved vendor</strong><span class="text-slate-500">License #{SITE.license}</span></span>
+        </div>
       </div>
     )}
   </div>
