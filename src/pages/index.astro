@@ -25,43 +25,38 @@ const featured = PRODUCTS.slice(0, 3);
   schema={[faqSchema]}
 >
   <!-- HERO -->
-  <section class="hero-bg relative isolate overflow-hidden pb-28 text-white sm:pb-36">
-    <div class="door-grid absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]"></div>
-    <div class="container-x grid items-center gap-14 pt-16 sm:pt-24 lg:grid-cols-12">
+  <section class="hero-bg relative isolate overflow-hidden text-white">
+    <div class="door-grid absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black,transparent_90%)]"></div>
+    <div class="container-x grid items-center gap-16 py-16 sm:py-24 lg:grid-cols-12">
       <div class="lg:col-span-6">
-        <p class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white/90 backdrop-blur"><Icon name="shield" class="h-4 w-4" />USPS-approved vendor in San Diego</p>
+        <p class="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-sm font-semibold text-navy-950"><Icon name="shield" class="h-4 w-4 text-red-600" />USPS-approved vendor in San Diego</p>
         <h1 class="mt-6 !text-white">Mailbox installation and repair, done right the first time.</h1>
-        <p class="mt-6 max-w-lg text-lg leading-relaxed text-white/75">Supply, installation and USPS coordination for apartments, HOAs and commercial properties.</p>
+        <p class="mt-6 max-w-lg text-lg leading-relaxed text-white/85">Supply, installation and USPS coordination for apartments, HOAs and commercial properties.</p>
         <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-          <a href="/contact/" class="btn btn-red shadow-lg shadow-red-600/30">Get an estimate</a>
+          <a href="/contact/" class="btn btn-red px-7 shadow-lg shadow-black/25">Get an estimate</a>
           <a href={SITE.phoneHref} class="btn btn-ghost"><Icon name="phone" class="h-4 w-4" />{SITE.phone}</a>
         </div>
       </div>
       <div class="relative lg:col-span-6">
-        <div class="absolute -inset-3 rounded-[28px] bg-white/10 blur-sm"></div>
-        <img src={IMAGES.hero} alt="USPS-approved cluster box units installed by Postal Systems" width="1200" height="1200" fetchpriority="high" class="relative aspect-[5/4] w-full rounded-2xl object-cover shadow-2xl shadow-black/40 ring-1 ring-white/20" />
+        <div class="absolute -bottom-5 -right-5 h-full w-full rounded-2xl bg-red-600"></div>
+        <img src={IMAGES.hero} alt="USPS-approved cluster box units installed by Postal Systems" width="1200" height="1200" fetchpriority="high" class="relative aspect-[5/4] w-full rounded-2xl object-cover shadow-2xl shadow-black/40" />
         <div class="absolute -bottom-6 left-6 flex items-center gap-3 rounded-xl bg-white px-4 py-3 text-navy-950 shadow-xl">
-          <span class="icon-chip !h-10 !w-10"><Icon name="check" class="h-5 w-5" /></span>
+          <span class="icon-chip-red !h-10 !w-10"><Icon name="check" class="h-5 w-5" /></span>
           <span class="text-sm leading-tight"><strong class="block">California licensed contractor</strong><span class="text-slate-500">License #{SITE.license}</span></span>
-        </div>
-        <div class="absolute -right-3 top-8 hidden rounded-xl bg-white px-4 py-3 text-navy-950 shadow-xl sm:block">
-          <p class="text-sm leading-tight"><strong class="block text-base">1 to 2 days</strong><span class="text-slate-500">typical CBU or 4C install</span></p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TRUST BAR -->
-  <section class="relative z-10 -mt-14 sm:-mt-16">
-    <div class="container-x">
-      <div class="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-blue-100 shadow-[0_30px_60px_-24px_rgba(15,28,90,.45)] ring-1 ring-blue-100 lg:grid-cols-4">
-        {STATS.map((s, i) => (
-          <div class="flex items-center gap-4 bg-white px-6 py-7">
-            <span class="icon-chip shrink-0"><Icon name={statIcons[i]} /></span>
-            <div><p class="text-3xl font-bold tracking-tight text-navy-950">{s.value}</p><p class="text-sm text-slate-500">{s.label}</p></div>
-          </div>
-        ))}
-      </div>
+  <!-- TRUST BAND -->
+  <section class="red-bg text-white">
+    <div class="container-x grid grid-cols-2 gap-y-6 py-9 lg:grid-cols-4">
+      {STATS.map((s, i) => (
+        <div class="flex items-center justify-center gap-4 lg:border-r lg:border-white/20 last:border-0">
+          <span class="grid h-12 w-12 place-items-center rounded-xl bg-white/15"><Icon name={statIcons[i]} /></span>
+          <div><p class="text-3xl font-bold tracking-tight">{s.value}</p><p class="text-sm text-white/80">{s.label}</p></div>
+        </div>
+      ))}
     </div>
   </section>
 
@@ -77,12 +72,13 @@ const featured = PRODUCTS.slice(0, 3);
       </div>
       <div class="mt-14 grid gap-5 lg:grid-cols-12">
         {SERVICES.map((s, i) => (
-          <a href={`/services/${s.slug}/`} class:list={['group relative isolate flex min-h-[18rem] flex-col justify-end overflow-hidden rounded-2xl p-7 text-white shadow-[0_20px_40px_-20px_rgba(15,28,90,.5)]', spans[i]]}>
+          <a href={`/services/${s.slug}/`} class:list={['group relative isolate flex min-h-[19rem] flex-col justify-end overflow-hidden rounded-2xl p-7 text-white shadow-[0_20px_40px_-20px_rgba(18,26,79,.5)]', spans[i]]}>
             <img src={s.image} alt={s.imageAlt} loading="lazy" width="1200" height="800" class="absolute inset-0 -z-20 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-            <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950 via-navy-950/70 to-navy-950/10"></div>
+            <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950 via-navy-950/70 to-navy-950/5"></div>
+            <span class="mb-4 block h-1 w-12 rounded-full bg-red-500"></span>
             <h3 class="!text-white text-2xl">{s.name}</h3>
-            <p class="mt-2 max-w-md text-[0.95rem] text-white/75">{s.short}</p>
-            <span class="mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold backdrop-blur transition group-hover:bg-red-600">Learn more <Icon name="arrow" class="h-4 w-4" /></span>
+            <p class="mt-2 max-w-md text-[0.95rem] text-white/80">{s.short}</p>
+            <span class="mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-red-600 px-4 py-2 text-sm font-semibold shadow-lg shadow-black/20 transition group-hover:bg-white group-hover:text-red-700">Learn more <Icon name="arrow" class="h-4 w-4" /></span>
           </a>
         ))}
       </div>
@@ -90,28 +86,30 @@ const featured = PRODUCTS.slice(0, 3);
   </section>
 
   <!-- WHY -->
-  <section class="hero-bg relative isolate overflow-hidden py-20 text-white sm:py-28">
-    <div class="door-grid absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]"></div>
-    <div class="container-x grid items-center gap-14 lg:grid-cols-12">
-      <div class="lg:col-span-5">
-        <h2 class="!text-white">Professional installation protects your property and your residents</h2>
-        <p class="mt-5 text-lg text-white/70">Secure, compliant mail delivery is more critical than ever. Get it done once, by a USPS-approved vendor.</p>
-        <a href="/contact/" class="btn btn-red mt-8 shadow-lg shadow-red-600/30">Get an estimate</a>
+  <section class="bg-blue-50 py-20 sm:py-28">
+    <div class="container-x grid items-center gap-16 lg:grid-cols-2">
+      <div class="relative">
+        <div class="absolute -bottom-4 -left-4 h-full w-full rounded-2xl bg-navy-900"></div>
+        <img src={IMAGES.oceanside} alt="Cluster mailboxes installed on a concrete pad" loading="lazy" width="1200" height="900" class="relative aspect-[4/3] w-full rounded-2xl object-cover shadow-2xl shadow-navy-900/25" />
       </div>
-      <div class="grid gap-4 sm:grid-cols-2 lg:col-span-7">
-        {why.map((w) => (
-          <div class="rounded-2xl border border-white/15 bg-white/[.07] p-6 backdrop-blur transition hover:bg-white/[.11]">
-            <span class="grid h-11 w-11 place-items-center rounded-xl bg-white text-blue-700"><Icon name={w.i} /></span>
-            <h3 class="mt-5 !text-white">{w.t}</h3>
-            <p class="mt-2 text-[0.95rem] leading-relaxed text-white/70">{w.d}</p>
-          </div>
-        ))}
+      <div>
+        <h2>Professional installation protects your property and your residents</h2>
+        <p class="mt-4 text-lg text-slate-500">Secure, compliant mail delivery is more critical than ever.</p>
+        <div class="mt-9 grid gap-5 sm:grid-cols-2">
+          {why.map((w) => (
+            <div class="rounded-2xl bg-white p-6 shadow-[0_1px_2px_rgba(18,26,79,.05),0_14px_30px_-14px_rgba(18,26,79,.22)]">
+              <span class="icon-chip-red"><Icon name={w.i} /></span>
+              <h3 class="mt-4">{w.t}</h3>
+              <p class="mt-2 text-[0.92rem] leading-relaxed text-slate-500">{w.d}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </section>
 
   <!-- PRODUCTS -->
-  <section class="section bg-blue-50">
+  <section class="section">
     <div class="container-x">
       <div class="flex flex-wrap items-end justify-between gap-6">
         <div class="max-w-2xl"><h2>USPS-approved systems we supply</h2></div>
@@ -119,15 +117,15 @@ const featured = PRODUCTS.slice(0, 3);
       </div>
       <div class="mt-14 grid gap-6 md:grid-cols-3">
         {featured.map((p) => (
-          <a href={`/products/${p.slug}/`} class="card group !p-0 overflow-hidden">
+          <a href={`/products/${p.slug}/`} class="card group overflow-hidden !border-t-[4px] !border-t-red-600 !p-0">
             <div class="aspect-[4/3] overflow-hidden"><img src={p.image} alt={p.name} loading="lazy" width="800" height="600" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" /></div>
             <div class="p-7">
               <h3 class="text-2xl">{p.name}</h3>
               <p class="mt-2 text-slate-500">{p.short}</p>
               <ul class="mt-5 space-y-2 text-sm text-slate-600">
-                {p.features.slice(0, 3).map((f) => <li class="flex items-center gap-2"><Icon name="check" class="h-4 w-4 text-blue-700" />{f}</li>)}
+                {p.features.slice(0, 3).map((f) => <li class="flex items-center gap-2"><Icon name="check" class="h-4 w-4 text-red-600" />{f}</li>)}
               </ul>
-              <span class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-700 transition group-hover:gap-3">View details <Icon name="arrow" class="h-4 w-4" /></span>
+              <span class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-red-600 transition group-hover:gap-3">View details <Icon name="arrow" class="h-4 w-4" /></span>
             </div>
           </a>
         ))}
@@ -136,16 +134,17 @@ const featured = PRODUCTS.slice(0, 3);
   </section>
 
   <!-- PROCESS -->
-  <section class="section">
+  <section class="hero-bg relative isolate overflow-hidden py-20 text-white sm:py-28">
+    <div class="door-grid absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]"></div>
     <div class="container-x">
-      <div class="max-w-2xl"><h2>From site visit to USPS handover</h2><p class="mt-4 text-lg text-slate-500">One vendor, five steps, one price.</p></div>
-      <ol class="relative mt-16 grid gap-6 md:grid-cols-5">
-        <div class="absolute left-0 right-0 top-6 hidden h-px bg-blue-100 md:block"></div>
+      <div class="max-w-2xl"><h2 class="!text-white">From site visit to USPS handover</h2><p class="mt-4 text-lg text-white/80">One vendor, five steps, one price.</p></div>
+      <ol class="relative mt-16 grid gap-8 md:grid-cols-5">
+        <div class="absolute left-0 right-0 top-6 hidden h-px bg-white/25 md:block"></div>
         {PROCESS.map((p, i) => (
           <li class="relative">
-            <span class="relative grid h-12 w-12 place-items-center rounded-full bg-navy-900 text-lg font-bold text-white shadow-lg shadow-navy-900/30 ring-8 ring-white">{i + 1}</span>
-            <h3 class="mt-5">{p.title}</h3>
-            <p class="mt-2 text-[0.95rem] leading-relaxed text-slate-500">{p.text}</p>
+            <span class="relative grid h-12 w-12 place-items-center rounded-full bg-red-600 text-lg font-bold text-white shadow-lg shadow-black/25 ring-8 ring-[#2c3f9a]">{i + 1}</span>
+            <h3 class="mt-5 !text-white">{p.title}</h3>
+            <p class="mt-2 text-[0.95rem] leading-relaxed text-white/75">{p.text}</p>
           </li>
         ))}
       </ol>
@@ -153,7 +152,7 @@ const featured = PRODUCTS.slice(0, 3);
   </section>
 
   <!-- PROJECTS -->
-  <section class="section bg-blue-50">
+  <section class="section">
     <div class="container-x">
       <div class="flex flex-wrap items-end justify-between gap-6">
         <h2 class="max-w-2xl">Recent projects across Southern California</h2>
@@ -161,11 +160,11 @@ const featured = PRODUCTS.slice(0, 3);
       </div>
       <div class="mt-14 grid gap-6 md:grid-cols-3">
         {PROJECTS.map((p) => (
-          <figure class="group relative isolate overflow-hidden rounded-2xl shadow-[0_20px_40px_-20px_rgba(15,28,90,.5)]">
+          <figure class="group relative isolate overflow-hidden rounded-2xl shadow-[0_20px_40px_-20px_rgba(18,26,79,.5)]">
             <img src={p.image} alt={`${p.title}, ${p.city}`} loading="lazy" width="800" height="1000" class="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105" />
             <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-950/10 to-transparent"></div>
-            <span class="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-navy-950"><Icon name="pin" class="h-3.5 w-3.5" />{p.city}</span>
-            <figcaption class="absolute inset-x-0 bottom-0 p-6 text-white"><p class="text-xl font-bold tracking-tight">{p.title}</p><p class="mt-1 text-sm text-white/75">{p.note}</p></figcaption>
+            <span class="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-red-600 px-3 py-1.5 text-xs font-semibold text-white"><Icon name="pin" class="h-3.5 w-3.5" />{p.city}</span>
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 text-white"><p class="text-xl font-bold tracking-tight">{p.title}</p><p class="mt-1 text-sm text-white/80">{p.note}</p></figcaption>
           </figure>
         ))}
       </div>
@@ -173,18 +172,15 @@ const featured = PRODUCTS.slice(0, 3);
   </section>
 
   <!-- TESTIMONIALS -->
-  <section class="section">
+  <section class="bg-blue-50 py-20 sm:py-28">
     <div class="container-x">
       <h2 class="max-w-2xl">Trusted by property managers and boards</h2>
       <div class="mt-14 grid gap-6 md:grid-cols-3">
         {TESTIMONIALS.map((t) => (
-          <blockquote class="card flex flex-col !p-8">
-            <Icon name="quote" class="h-9 w-9 text-red-600/80" />
+          <blockquote class="card flex flex-col !border-l-[4px] !border-l-red-600 !p-8">
+            <span class="grid h-11 w-11 place-items-center rounded-full bg-red-600 text-white"><Icon name="quote" class="h-5 w-5" /></span>
             <p class="mt-5 flex-1 text-xl font-semibold leading-snug tracking-tight text-navy-950">{t.quote}</p>
-            <footer class="mt-7 flex items-center gap-3 border-t border-blue-100 pt-5">
-              <span class="grid h-10 w-10 place-items-center rounded-full bg-navy-900 text-sm font-bold text-white">{t.who[0]}</span>
-              <span class="text-sm text-slate-500">{t.who}</span>
-            </footer>
+            <footer class="mt-7 border-t border-blue-100 pt-5 text-sm text-slate-500">{t.who}</footer>
           </blockquote>
         ))}
       </div>
@@ -192,12 +188,12 @@ const featured = PRODUCTS.slice(0, 3);
   </section>
 
   <!-- AREAS + FAQ -->
-  <section class="section bg-blue-50">
+  <section class="section">
     <div class="container-x grid gap-16 lg:grid-cols-12">
       <div class="lg:col-span-5">
         <h2>Based in San Diego, serving Southern California</h2>
         <div class="mt-8 flex flex-wrap gap-2.5">
-          {AREAS.map((a) => <a href={`/service-areas/${a.slug}/`} class="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-semibold text-navy-900 shadow-sm ring-1 ring-blue-100 transition hover:bg-navy-900 hover:text-white"><Icon name="pin" class="h-3.5 w-3.5" />{a.name}</a>)}
+          {AREAS.map((a) => <a href={`/service-areas/${a.slug}/`} class="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-semibold text-navy-900 shadow-sm ring-1 ring-blue-100 transition hover:bg-red-600 hover:text-white hover:ring-red-600"><Icon name="pin" class="h-3.5 w-3.5" />{a.name}</a>)}
         </div>
       </div>
       <div class="lg:col-span-7">
@@ -208,14 +204,14 @@ const featured = PRODUCTS.slice(0, 3);
   </section>
 
   <!-- ESTIMATE -->
-  <section class="container-x py-16 sm:py-24" id="estimate">
-    <div class="hero-bg relative isolate overflow-hidden rounded-3xl px-8 py-14 text-white shadow-2xl shadow-navy-900/30 sm:px-14 sm:py-16">
+  <section class="container-x pb-20 sm:pb-28" id="estimate">
+    <div class="red-bg relative isolate overflow-hidden rounded-3xl px-8 py-14 text-white shadow-2xl shadow-red-700/30 sm:px-14 sm:py-16">
       <div class="door-grid absolute inset-0 -z-10 opacity-70 [mask-image:linear-gradient(to_right,black,transparent_80%)]"></div>
       <div class="grid items-center gap-12 lg:grid-cols-2">
         <div>
           <h2 class="!text-white">Get an estimate from an expert, fast</h2>
-          <p class="mt-4 max-w-md text-lg text-white/75">Tell us what you need. We'll follow up with next steps and a detailed quote.</p>
-          <a href={SITE.phoneHref} class="mt-8 inline-flex items-center gap-3 text-2xl font-bold hover:text-white/80"><span class="grid h-12 w-12 place-items-center rounded-full bg-white/15"><Icon name="phone" /></span>{SITE.phone}</a>
+          <p class="mt-4 max-w-md text-lg text-white/85">Tell us what you need. We'll follow up with next steps and a detailed quote.</p>
+          <a href={SITE.phoneHref} class="mt-8 inline-flex items-center gap-3 text-2xl font-bold hover:text-white/80"><span class="grid h-12 w-12 place-items-center rounded-full bg-white/20"><Icon name="phone" /></span>{SITE.phone}</a>
         </div>
         <div class="rounded-2xl bg-white p-8 text-ink shadow-2xl"><EstimateForm id="home" compact /></div>
       </div>
