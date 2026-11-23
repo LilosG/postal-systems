@@ -1,0 +1,17 @@
+---
+import { SITE } from '../data/site';
+const { title = 'Get an estimate from an expert, fast', text = 'The right USPS-approved mailboxes, proper installation and postal coordination, all on the first try and for one price.' } = Astro.props;
+---
+<section class="relative overflow-hidden bg-red-600 text-white">
+  <div class="stripe absolute inset-x-0 top-0 h-[6px]"></div>
+  <div class="container-x grid items-center gap-8 py-14 lg:grid-cols-[1fr_auto]">
+    <div>
+      <h2 class="!text-white">{title}</h2>
+      <p class="mt-3 max-w-2xl text-lg text-white/90">{text}</p>
+    </div>
+    <div class="flex flex-col gap-3 sm:flex-row">
+      <a href="/contact/" class="btn bg-white text-red-700 hover:bg-navy-950 hover:text-white">Get an Estimate</a>
+      <a href={SITE.phoneHref} class="btn btn-ghost">Call {SITE.phone}</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyCall from '../components/StickyCall.astro';
+import { SITE, AREAS } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  schema?: object[];
+  crumbs?: { name: string; href?: string }[];
+  image?: string;
+}
+const { title, description, schema = [], crumbs = [], image = '/images/commercial-mailboxes-san-diego-hero-1200.webp' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const origin = Astro.site!.origin;
+
+const business = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'GeneralContractor'],
+  '@id': `${origin}/#business`,
+  name: SITE.name,
+  url: origin,
+  telephone: '+1-619-461-4787',
+  email: SITE.email,
+  image: `${origin}${image}`,
+  description: 'USPS-approved commercial and residential mailbox supply, installation and repair in San Diego County.',
+  address: { '@type': 'PostalAddress', addressLocality: 'San Diego', addressRegion: 'CA', addressCountry: 'US' },
+  areaServed: AREAS.map((a) => ({ '@type': a.type === 'city' ? 'City' : 'AdministrativeArea', name: a.name })),
+  identifier: { '@type': 'PropertyValue', name: 'California Contractor License', value: SITE.license },
+};
+const crumbSchema = crumbs.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [{ name: 'Home', href: '/' }, ...crumbs].map((c, i) => ({
+        '@type': 'ListItem', position: i + 1, name: c.name,
+        item: new URL(c.href ?? Astro.url.pathname, Astro.site).href,
+      })),
+    }
+  : null;
+const graph = [business, ...(crumbSchema ? [crumbSchema] : []), ...schema];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#1f2a7a" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${origin}${image}`} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {graph.map((g) => <script type="application/ld+json" set:html={JSON.stringify(g)} />)}
+  </head>
+  <body class="pb-14 lg:pb-0">
+    <Header />
+    <main><slot /></main>
+    <Footer />
+    <StickyCall />
+  </body>
+</html>

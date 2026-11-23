@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { SITE } from '../data/site';
+const crumbs = [{ name: 'Privacy Policy' }];
+---
+<Base title="Privacy Policy | Postal Systems" description="How Postal Systems handles information you submit through this website." crumbs={crumbs}>
+  <PageHero title="Privacy Policy" crumbs={crumbs} />
+  <section class="section"><div class="container-x prose-copy max-w-3xl">
+    <p>Placeholder privacy policy for the redesign preview. The final policy should be supplied or approved by Postal Systems before launch.</p>
+    <p>Questions: <a class="underline" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+  </div></section>
+</Base>

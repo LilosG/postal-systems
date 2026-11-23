@@ -1,0 +1,43 @@
+---
+const { id = 'estimate', compact = false } = Astro.props;
+const field = 'w-full border border-blue-100 bg-white px-4 py-3 text-base text-ink placeholder:text-slate-500/70 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 rounded-[3px]';
+---
+<form data-estimate class="space-y-3" novalidate>
+  <div>
+    <label for={`${id}-name`} class="sr-only">Name</label>
+    <input id={`${id}-name`} name="name" class={field} placeholder="Your name" required autocomplete="name" />
+  </div>
+  <div>
+    <label for={`${id}-phone`} class="sr-only">Phone</label>
+    <input id={`${id}-phone`} name="phone" type="tel" class={field} placeholder="Phone number" required autocomplete="tel" />
+  </div>
+  <div>
+    <label for={`${id}-type`} class="sr-only">Project type</label>
+    <select id={`${id}-type`} name="project" class={field}>
+      <option value="">What do you need?</option>
+      <option>New mailbox installation</option>
+      <option>CBU installation</option>
+      <option>4C wall-mounted mailboxes</option>
+      <option>Parcel lockers</option>
+      <option>Repair or lock change</option>
+      <option>ADA-compliant install</option>
+      <option>Not sure yet</option>
+    </select>
+  </div>
+  {!compact && (
+    <div>
+      <label for={`${id}-msg`} class="sr-only">Details (optional)</label>
+      <textarea id={`${id}-msg`} name="message" rows="3" class={field} placeholder="Property type and number of addresses (optional)"></textarea>
+    </div>
+  )}
+  <button type="submit" class="btn btn-red w-full">Get My Estimate</button>
+  <p class="hidden text-center font-medium text-blue-700" data-thanks>Thanks! (Demo form: not connected yet.)</p>
+</form>
+<script>
+  document.querySelectorAll<HTMLFormElement>('form[data-estimate]').forEach((f) => {
+    f.addEventListener('submit', (e) => {
+      e.preventDefault();
+      f.querySelector('[data-thanks]')?.classList.remove('hidden');
+    });
+  });
+</script>

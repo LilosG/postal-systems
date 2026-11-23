@@ -1,0 +1,73 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import FaqList from '../../components/FaqList.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { AREAS, SERVICES, SITE, STATS, getArea } from '../../data/site';
+export function getStaticPaths() { return AREAS.map((a) => ({ params: { slug: a.slug }, props: { a } })); }
+const { a } = Astro.props;
+const place = a.type === 'county' ? `${a.name}` : `${a.name}, CA`;
+const crumbs = [{ name: 'Service Areas', href: '/service-areas/' }, { name: a.name }];
+const faqs = [
+  { q: `Do you install mailboxes in ${a.name}?`, a: a.type === 'county' ? `Yes. We take select projects in ${a.name}. Contact us with your property details and we will confirm scope and timing.` : `Yes. Postal Systems installs and repairs commercial and residential mailbox systems in ${a.name}.` },
+  { q: `Are you USPS-approved for ${a.name} projects?`, a: `Yes. We are a USPS-approved vendor and a California licensed contractor (License #${SITE.license}). We coordinate USPS inspection and sign-off as part of the project.` },
+  { q: `What does a ${a.name} mailbox installation cost?`, a: 'Pricing depends on the type of system, number of addresses and site conditions. We provide a detailed quote after a site visit, with hardware, installation and USPS coordination in one price.' },
+];
+const schema = [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }];
+const nearby = a.nearby.map(getArea);
+---
+<Base title={`Commercial Mailbox Installation ${a.name} | Postal Systems`} description={`USPS-approved mailbox installation, CBU, 4C, parcel lockers and repairs in ${place}. California License #${SITE.license}. Get a fast estimate.`} crumbs={crumbs} schema={schema}>
+  <PageHero kicker={a.type === 'county' ? 'Select projects' : 'Local service'} title={`Mailbox installation & repair in ${a.name}`} text={`Postal Systems supplies, installs and repairs USPS-approved mailbox systems in ${a.name} for apartments, HOAs, builders and commercial properties, with USPS coordination included.`} crumbs={crumbs} />
+
+  <section class="section">
+    <div class="container-x">
+      <p class="eyebrow">Services in {a.name}</p>
+      <h2 class="mt-2">Mailbox services available in {a.name}</h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {SERVICES.map((s) => (
+          <a href={a.deep ? `/service-areas/${a.slug}/${s.slug}/` : `/services/${s.slug}/`} class="card">
+            <h3>{s.name}</h3>
+            <p class="mt-2 text-slate-600">{s.short}</p>
+            <span class="mt-4 inline-block font-display text-lg font-semibold uppercase tracking-wide text-red-600">{s.name} in {a.name} &rarr;</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {a.project && (
+    <section class="bg-navy-900 py-12 text-white">
+      <div class="container-x">
+        <p class="eyebrow !text-red-500">Local project</p>
+        <h2 class="mt-2 !text-white text-3xl">{a.project.title}</h2>
+        <p class="mt-2 text-lg text-white/80">{a.project.note}</p>
+      </div>
+    </section>
+  )}
+
+  <section class="section bg-blue-50/60">
+    <div class="container-x grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-7">
+        <p class="eyebrow">Why Postal Systems</p>
+        <h2 class="mt-2">One vendor from quote to USPS sign-off</h2>
+        <div class="prose-copy mt-6">
+          <p>Property owners and managers in {a.name} call us when mailboxes are damaged, non-compliant or due for replacement. We handle the hardware, the pad and anchors, tenant notice and the postal service, so the project is finished once.</p>
+          <p>We are a USPS-approved vendor and a California licensed contractor (License #{SITE.license}).</p>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-4">{STATS.map((s) => <div class="border-l-4 border-red-600 bg-white p-4"><p class="font-display text-4xl font-bold text-red-600">{s.value}</p><p class="text-slate-600">{s.label}</p></div>)}</div>
+      </div>
+      <aside class="lg:col-span-5">
+        <h3>Nearby areas we serve</h3>
+        <ul class="mt-4 space-y-2">{nearby.map((n) => <li><a class="font-display text-xl font-semibold text-navy-900 hover:text-red-600" href={`/service-areas/${n.slug}/`}>Mailbox installation in {n.name} &rarr;</a></li>)}</ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-4"><p class="eyebrow">FAQ</p><h2 class="mt-2">{a.name} mailbox questions</h2></div>
+      <div class="lg:col-span-8"><FaqList faqs={faqs} /></div>
+    </div>
+  </section>
+  <CtaBand title={`Need mailboxes in ${a.name}?`} />
+</Base>

@@ -1,0 +1,45 @@
+---
+import Logo from './Logo.astro';
+import EstimateForm from './EstimateForm.astro';
+import { SITE, SERVICES, AREAS } from '../data/site';
+---
+<footer class="bg-navy-950 text-white">
+  <div class="stripe h-[6px]"></div>
+  <div class="container-x grid gap-12 py-16 lg:grid-cols-12">
+    <div class="lg:col-span-4">
+      <a href="/" aria-label="Postal Systems home"><Logo light /></a>
+      <p class="mt-5 max-w-sm text-white/70">USPS-approved commercial and residential mailbox supply, installation and repair, based in {SITE.base}.</p>
+      <p class="mt-5"><a href={SITE.phoneHref} class="font-display text-3xl font-semibold hover:text-white/80">{SITE.phone}</a></p>
+      <p><a href={`mailto:${SITE.email}`} class="text-white/70 hover:text-white">{SITE.email}</a></p>
+      <p class="mt-4 text-sm text-white/60">California Contractor License #{SITE.license}</p>
+    </div>
+    <div class="grid grid-cols-2 gap-8 lg:col-span-4">
+      <div>
+        <h3 class="!text-white text-lg uppercase tracking-wider">Services</h3>
+        <ul class="mt-4 space-y-2 text-white/70">
+          {SERVICES.map((s) => <li><a class="hover:text-white" href={`/services/${s.slug}/`}>{s.name}</a></li>)}
+          <li><a class="hover:text-white" href="/products/">Products</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="!text-white text-lg uppercase tracking-wider">Service Areas</h3>
+        <ul class="mt-4 space-y-2 text-white/70">
+          {AREAS.map((a) => <li><a class="hover:text-white" href={`/service-areas/${a.slug}/`}>{a.name}</a></li>)}
+        </ul>
+      </div>
+    </div>
+    <div class="lg:col-span-4">
+      <div class="bg-white p-6 text-ink">
+        <h3 class="text-2xl">Quick Estimate Request</h3>
+        <p class="mb-4 mt-1 text-sm text-slate-500">Three fields. We reply fast.</p>
+        <EstimateForm id="footer" compact />
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="container-x flex flex-col gap-2 py-6 text-sm text-white/60 sm:flex-row sm:justify-between">
+      <p>&copy; {new Date().getFullYear()} Postal Systems. All rights reserved. <a class="underline" href="/privacy/">Privacy Policy</a></p>
+      <p>Website design by <a class="underline" href={SITE.designer.url}>{SITE.designer.name}</a></p>
+    </div>
+  </div>
+</footer>

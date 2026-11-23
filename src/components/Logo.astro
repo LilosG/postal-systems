@@ -1,0 +1,18 @@
+---
+const { light = false } = Astro.props;
+---
+<span class="inline-flex items-center gap-3">
+  <svg viewBox="0 0 40 44" class="h-11 w-10 shrink-0" aria-hidden="true">
+    <rect x="2" y="3" width="36" height="38" fill={light ? '#fff' : '#1f2a7a'} />
+    <g fill={light ? '#1f2a7a' : '#fff'}>
+      <rect x="6" y="7" width="12" height="7" /><rect x="22" y="7" width="12" height="7" />
+      <rect x="6" y="17" width="12" height="7" /><rect x="22" y="17" width="12" height="7" />
+      <rect x="6" y="27" width="12" height="10" />
+    </g>
+    <rect x="22" y="27" width="12" height="10" fill="#c4202e" />
+  </svg>
+  <span class="leading-none">
+    <span class:list={['block font-display text-[1.7rem] font-bold uppercase tracking-[0.04em]', light ? 'text-white' : 'text-navy-900']}>Postal Systems</span>
+    <span class:list={['mt-1 block font-display text-[0.72rem] font-medium uppercase tracking-[0.2em]', light ? 'text-white/70' : 'text-red-600']}>Supply | Installation | Repair</span>
+  </span>
+</span>

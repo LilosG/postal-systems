@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { PRODUCTS, SERVICES } from '../../data/site';
+export function getStaticPaths() { return PRODUCTS.map((p) => ({ params: { slug: p.slug }, props: { p } })); }
+const { p } = Astro.props;
+const crumbs = [{ name: 'Products', href: '/products/' }, { name: p.name }];
+const schema = [{ '@context': 'https://schema.org', '@type': 'Product', name: p.name, description: p.intro, brand: { '@type': 'Brand', name: 'Postal Systems' }, image: `${Astro.site!.origin}${p.image}` }];
+const related = SERVICES.filter((s) => s.productSlugs.includes(p.slug));
+---
+<Base title={`${p.name} | USPS-Approved | Postal Systems San Diego`} description={`${p.short} Supplied and installed by Postal Systems, a USPS-approved vendor in San Diego.`} crumbs={crumbs} schema={schema} image={p.image}>
+  <PageHero kicker="Product" title={p.name} text={p.intro} image={p.image} imageAlt={p.name} crumbs={crumbs} />
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-2">
+      <div>
+        <h2>Features</h2>
+        <ul class="mt-6 space-y-3">{p.features.map((f: string) => <li class="flex gap-3 text-lg"><span class="mt-2 h-2.5 w-2.5 shrink-0 bg-red-600"></span>{f}</li>)}</ul>
+        <p class="mt-8 text-lg text-slate-600"><strong class="text-ink">Common uses:</strong> {p.useCases}</p>
+      </div>
+      <div class="bg-blue-50/70 p-8">
+        <h2 class="text-3xl">Related services</h2>
+        <ul class="mt-5 space-y-3">{related.map((s) => <li><a class="font-display text-xl font-semibold text-navy-900 hover:text-red-600" href={`/services/${s.slug}/`}>{s.name} &rarr;</a></li>)}</ul>
+        <a href="/contact/" class="btn btn-red mt-8">Request a Quote</a>
+      </div>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

@@ -1,0 +1,86 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import FaqList from '../../components/FaqList.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { SERVICES, AREAS, DEEP_AREAS, PROCESS, getProduct, SITE } from '../../data/site';
+
+export function getStaticPaths() { return SERVICES.map((s) => ({ params: { slug: s.slug }, props: { s } })); }
+const { s: svc } = Astro.props;
+const crumbs = [{ name: 'Services', href: '/services/' }, { name: svc.name }];
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: svc.name, serviceType: svc.name, description: svc.intro,
+    provider: { '@id': `${Astro.site!.origin}/#business` }, areaServed: AREAS.map((a) => a.name) },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: svc.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+const others = SERVICES.filter((x) => x.slug !== svc.slug);
+---
+<Base title={`${svc.name} San Diego | Postal Systems`} description={`${svc.short} USPS-approved vendor serving San Diego County. California License #${SITE.license}.`} crumbs={crumbs} schema={schema} image={svc.image}>
+  <PageHero kicker={svc.kicker} title={svc.h1} text={svc.intro} image={svc.image} imageAlt={svc.imageAlt} crumbs={crumbs} />
+
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-7">
+        <p class="eyebrow">What's included</p>
+        <h2 class="mt-2">Everything handled by one vendor</h2>
+        <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+          {svc.includes.map((i: string) => (
+            <li class="flex items-start gap-3 border border-blue-100 bg-blue-50/50 p-4 text-lg font-medium text-navy-900">
+              <svg viewBox="0 0 20 20" class="mt-1 h-5 w-5 shrink-0 text-red-600" fill="currentColor"><path d="M7.6 14.2 3.4 10l1.4-1.4 2.8 2.8 7.6-7.6L16.6 5z"/></svg>{i}
+            </li>
+          ))}
+        </ul>
+        <p class="mt-8 text-lg text-slate-600"><strong class="text-ink">Best for:</strong> {svc.bestFor}</p>
+      </div>
+      <aside class="lg:col-span-5">
+        <div class="bg-navy-900 p-8 text-white">
+          <h3 class="!text-white">Related products</h3>
+          <ul class="mt-4 space-y-3">
+            {svc.productSlugs.map((p: string) => { const pr = getProduct(p); return <li><a class="block border-b border-white/15 pb-3 font-display text-xl hover:text-red-500" href={`/products/${pr.slug}/`}>{pr.name} &rarr;</a></li>; })}
+          </ul>
+          <a href="/contact/" class="btn btn-red mt-6 w-full">Get an Estimate</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section bg-blue-50/60">
+    <div class="container-x">
+      <p class="eyebrow">Where we install</p>
+      <h2 class="mt-2">{svc.name} by location</h2>
+      <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {DEEP_AREAS.map((a) => <a class="card !p-5 font-display text-xl font-semibold text-navy-900" href={`/service-areas/${a.slug}/${svc.slug}/`}>{svc.name} in {a.name} &rarr;</a>)}
+      </div>
+      <p class="mt-6 flex flex-wrap gap-2 text-slate-600">Also serving:
+        {AREAS.filter((a) => !a.deep).map((a) => <a class="underline hover:text-red-600" href={`/service-areas/${a.slug}/`}>{a.name}</a>)}
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x">
+      <p class="eyebrow">Our process</p>
+      <h2 class="mt-2">What to expect</h2>
+      <ol class="mt-10 grid gap-6 md:grid-cols-5">
+        {PROCESS.map((p, i) => (
+          <li class="border-t-4 border-red-600 pt-4"><p class="font-display text-4xl font-bold text-blue-100">0{i + 1}</p><h3 class="text-xl">{p.title}</h3><p class="mt-2 text-slate-600">{p.text}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section bg-blue-50/60">
+    <div class="container-x grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-4"><p class="eyebrow">FAQ</p><h2 class="mt-2">{svc.name} questions</h2></div>
+      <div class="lg:col-span-8"><FaqList faqs={svc.faqs} /></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x">
+      <h2 class="text-3xl">Other services</h2>
+      <div class="mt-6 flex flex-wrap gap-3">{others.map((o) => <a class="border border-blue-100 px-5 py-3 font-display text-lg font-semibold text-navy-900 hover:border-red-600 hover:text-red-600" href={`/services/${o.slug}/`}>{o.name}</a>)}</div>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

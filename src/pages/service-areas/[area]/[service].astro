@@ -1,0 +1,83 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHero from '../../../components/PageHero.astro';
+import FaqList from '../../../components/FaqList.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { SERVICES, DEEP_AREAS, SITE, PROCESS, getArea, getProduct } from '../../../data/site';
+
+export function getStaticPaths() {
+  return DEEP_AREAS.flatMap((a) => SERVICES.map((s) => ({ params: { area: a.slug, service: s.slug }, props: { a, s } })));
+}
+const { a, s } = Astro.props;
+const crumbs = [{ name: 'Service Areas', href: '/service-areas/' }, { name: a.name, href: `/service-areas/${a.slug}/` }, { name: s.name }];
+const faqs = [
+  { q: `Do you offer ${s.name.toLowerCase()} in ${a.name}?`, a: `Yes. Postal Systems provides ${s.name.toLowerCase()} in ${a.name}, CA, including USPS coordination and handover.` },
+  ...s.faqs.slice(0, 2),
+  { q: `How do I get a quote in ${a.name}?`, a: `Call ${SITE.phone} or send the short estimate form. We review your property and send a detailed quote covering hardware, installation and USPS coordination.` },
+];
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: `${s.name} in ${a.name}`, serviceType: s.name, description: s.intro,
+    provider: { '@id': `${Astro.site!.origin}/#business` }, areaServed: { '@type': 'City', name: a.name } },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+const nearby = a.nearby.map(getArea);
+const otherServices = SERVICES.filter((x) => x.slug !== s.slug);
+---
+<Base title={`${s.name} in ${a.name}, CA | Postal Systems`} description={`${s.short} Serving ${a.name} and nearby areas. USPS-approved vendor, License #${SITE.license}.`} crumbs={crumbs} schema={schema} image={s.image}>
+  <PageHero kicker={`${a.name}, CA`} title={`${s.h1} in ${a.name}`} text={`${s.intro}`} image={s.image} imageAlt={`${s.name} in ${a.name}`} crumbs={crumbs} />
+
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-7">
+        <p class="eyebrow">What's included in {a.name}</p>
+        <h2 class="mt-2">{s.name} for {a.name} properties</h2>
+        <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+          {s.includes.map((i: string) => <li class="flex gap-3 border border-blue-100 bg-blue-50/50 p-4 text-lg font-medium text-navy-900"><span class="mt-2 h-2.5 w-2.5 shrink-0 bg-red-600"></span>{i}</li>)}
+        </ul>
+        <p class="mt-8 text-lg text-slate-600"><strong class="text-ink">Best for:</strong> {s.bestFor}</p>
+        {a.project && <p class="mt-4 border-l-4 border-red-600 bg-blue-50/60 p-4 text-slate-600"><strong class="text-ink">Recent work near you:</strong> {a.project.title}. {a.project.note}</p>}
+      </div>
+      <aside class="lg:col-span-5">
+        <div class="bg-navy-900 p-8 text-white">
+          <h3 class="!text-white">Related products</h3>
+          <ul class="mt-4 space-y-3">{s.productSlugs.map((p: string) => { const pr = getProduct(p); return <li><a class="block border-b border-white/15 pb-3 font-display text-xl hover:text-red-500" href={`/products/${pr.slug}/`}>{pr.name} &rarr;</a></li>; })}</ul>
+          <a href="/contact/" class="btn btn-red mt-6 w-full">Get an Estimate</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section bg-blue-50/60">
+    <div class="container-x">
+      <p class="eyebrow">Our process</p>
+      <h2 class="mt-2">How a {a.name} project runs</h2>
+      <ol class="mt-10 grid gap-6 md:grid-cols-5">
+        {PROCESS.map((p, i) => <li class="border-t-4 border-red-600 bg-white p-5"><p class="font-display text-4xl font-bold text-blue-100">0{i + 1}</p><h3 class="text-xl">{p.title}</h3><p class="mt-2 text-slate-600">{p.text}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-4"><p class="eyebrow">FAQ</p><h2 class="mt-2">{s.name} in {a.name}</h2></div>
+      <div class="lg:col-span-8"><FaqList faqs={faqs} /></div>
+    </div>
+  </section>
+
+  <section class="section bg-blue-50/60 !py-12">
+    <div class="container-x grid gap-10 md:grid-cols-2">
+      <div>
+        <h3>More services in {a.name}</h3>
+        <ul class="mt-4 space-y-2">{otherServices.map((o) => <li><a class="font-display text-xl font-semibold text-navy-900 hover:text-red-600" href={`/service-areas/${a.slug}/${o.slug}/`}>{o.name} in {a.name} &rarr;</a></li>)}</ul>
+      </div>
+      <div>
+        <h3>{s.name} nearby</h3>
+        <ul class="mt-4 space-y-2">
+          {nearby.map((n) => <li><a class="font-display text-xl font-semibold text-navy-900 hover:text-red-600" href={n.deep ? `/service-areas/${n.slug}/${s.slug}/` : `/service-areas/${n.slug}/`}>{s.name} in {n.name} &rarr;</a></li>)}
+          <li><a class="font-display text-xl font-semibold text-red-600" href={`/service-areas/${a.slug}/`}>All {a.name} services &rarr;</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <CtaBand title={`${s.name} in ${a.name}: get your estimate`} />
+</Base>
