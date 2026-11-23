@@ -38,7 +38,7 @@ const others = SERVICES.filter((x) => x.slug !== svc.slug);
           <ul class="mt-4 space-y-3">
             {svc.productSlugs.map((p: string) => { const pr = getProduct(p); return <li><a class="block border-b border-white/15 pb-3 font-display text-xl hover:text-red-500" href={`/products/${pr.slug}/`}>{pr.name} &rarr;</a></li>; })}
           </ul>
-          <a href="/contact/" class="btn btn-red mt-6 w-full">Get an Estimate</a>
+          <a href="/contact/" class="btn btn-red mt-6 w-full">Get an estimate</a>
         </div>
       </aside>
     </div>

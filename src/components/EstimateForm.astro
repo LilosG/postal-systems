@@ -1,6 +1,6 @@
 ---
 const { id = 'estimate', compact = false } = Astro.props;
-const field = 'w-full border border-blue-100 bg-white px-4 py-3 text-base text-ink placeholder:text-slate-500/70 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 rounded-[3px]';
+const field = 'w-full border border-blue-100 bg-white px-4 py-3 text-base text-ink placeholder:text-slate-500/70 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 rounded-lg';
 ---
 <form data-estimate class="space-y-3" novalidate>
   <div>
@@ -30,7 +30,7 @@ const field = 'w-full border border-blue-100 bg-white px-4 py-3 text-base text-i
       <textarea id={`${id}-msg`} name="message" rows="3" class={field} placeholder="Property type and number of addresses (optional)"></textarea>
     </div>
   )}
-  <button type="submit" class="btn btn-red w-full">Get My Estimate</button>
+  <button type="submit" class="btn btn-red w-full">Get my estimate</button>
   <p class="hidden text-center font-medium text-blue-700" data-thanks>Thanks! (Demo form: not connected yet.)</p>
 </form>
 <script>

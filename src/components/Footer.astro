@@ -1,10 +1,8 @@
 ---
 import Logo from './Logo.astro';
-import EstimateForm from './EstimateForm.astro';
 import { SITE, SERVICES, AREAS } from '../data/site';
 ---
 <footer class="bg-navy-950 text-white">
-  <div class="stripe h-[6px]"></div>
   <div class="container-x grid gap-12 py-16 lg:grid-cols-12">
     <div class="lg:col-span-4">
       <a href="/" aria-label="Postal Systems home"><Logo light /></a>
@@ -13,26 +11,19 @@ import { SITE, SERVICES, AREAS } from '../data/site';
       <p><a href={`mailto:${SITE.email}`} class="text-white/70 hover:text-white">{SITE.email}</a></p>
       <p class="mt-4 text-sm text-white/60">California Contractor License #{SITE.license}</p>
     </div>
-    <div class="grid grid-cols-2 gap-8 lg:col-span-4">
+    <div class="grid grid-cols-2 gap-8 lg:col-span-7 lg:col-start-6">
       <div>
-        <h3 class="!text-white text-lg uppercase tracking-wider">Services</h3>
+        <h3 class="!text-white text-lg">Services</h3>
         <ul class="mt-4 space-y-2 text-white/70">
           {SERVICES.map((s) => <li><a class="hover:text-white" href={`/services/${s.slug}/`}>{s.name}</a></li>)}
           <li><a class="hover:text-white" href="/products/">Products</a></li>
         </ul>
       </div>
       <div>
-        <h3 class="!text-white text-lg uppercase tracking-wider">Service Areas</h3>
+        <h3 class="!text-white text-lg">Service Areas</h3>
         <ul class="mt-4 space-y-2 text-white/70">
           {AREAS.map((a) => <li><a class="hover:text-white" href={`/service-areas/${a.slug}/`}>{a.name}</a></li>)}
         </ul>
-      </div>
-    </div>
-    <div class="lg:col-span-4">
-      <div class="bg-white p-6 text-ink">
-        <h3 class="text-2xl">Quick Estimate Request</h3>
-        <p class="mb-4 mt-1 text-sm text-slate-500">Three fields. We reply fast.</p>
-        <EstimateForm id="footer" compact />
       </div>
     </div>
   </div>

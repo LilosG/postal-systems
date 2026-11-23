@@ -41,7 +41,7 @@ const otherServices = SERVICES.filter((x) => x.slug !== s.slug);
         <div class="bg-navy-900 p-8 text-white">
           <h3 class="!text-white">Related products</h3>
           <ul class="mt-4 space-y-3">{s.productSlugs.map((p: string) => { const pr = getProduct(p); return <li><a class="block border-b border-white/15 pb-3 font-display text-xl hover:text-red-500" href={`/products/${pr.slug}/`}>{pr.name} &rarr;</a></li>; })}</ul>
-          <a href="/contact/" class="btn btn-red mt-6 w-full">Get an Estimate</a>
+          <a href="/contact/" class="btn btn-red mt-6 w-full">Get an estimate</a>
         </div>
       </aside>
     </div>

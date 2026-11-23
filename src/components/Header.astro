@@ -3,23 +3,14 @@ import Logo from './Logo.astro';
 import { SITE, SERVICES, PRODUCTS, AREAS } from '../data/site';
 const cities = AREAS.filter((a) => a.type === 'city');
 ---
-<div class="bg-navy-950 text-white">
-  <div class="container-x flex items-center justify-between py-2 text-sm">
-    <p class="hidden sm:block font-medium tracking-wide text-white/80">USPS-Approved Vendor &middot; California Contractor License #{SITE.license}</p>
-    <p class="sm:hidden text-white/80">USPS-Approved Vendor</p>
-    <a href={SITE.phoneHref} class="font-display text-lg font-semibold tracking-wide hover:text-white/80">{SITE.phone}</a>
-  </div>
-  <div class="stripe h-[5px]"></div>
-</div>
-
-<header class="sticky top-0 z-40 border-b border-blue-100 bg-white/95 backdrop-blur">
-  <div class="container-x flex items-center justify-between py-3">
+<header class="sticky top-0 z-40 border-b border-blue-100/80 bg-white/90 backdrop-blur">
+  <div class="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-3 sm:px-8">
     <a href="/" aria-label="Postal Systems home"><Logo /></a>
 
-    <nav class="hidden lg:flex items-center gap-1 font-display text-lg font-semibold uppercase tracking-wide text-navy-900" aria-label="Main">
+    <nav class="hidden lg:flex items-center gap-0.5 whitespace-nowrap text-[0.95rem] font-medium text-navy-900" aria-label="Main">
       <div class="group relative">
-        <a href="/services/" class="flex items-center gap-1 px-4 py-3 hover:text-red-600">Services <span class="text-xs">&#9662;</span></a>
-        <div class="invisible absolute left-0 top-full w-80 border-t-[3px] border-red-600 bg-white opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+        <a href="/services/" class="flex items-center gap-1 px-3.5 py-3 hover:text-red-600">Services <span class="text-xs">&#9662;</span></a>
+        <div class="invisible absolute left-0 top-full w-80 rounded-b-xl border border-blue-100 bg-white opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
           <ul class="py-2 text-base normal-case tracking-normal">
             {SERVICES.map((s) => <li><a class="block px-5 py-2.5 hover:bg-blue-50 hover:text-red-600" href={`/services/${s.slug}/`}>{s.name}</a></li>)}
             <li class="border-t border-blue-100"><a class="block px-5 py-2.5 text-red-600" href="/services/">View all services &rarr;</a></li>
@@ -27,8 +18,8 @@ const cities = AREAS.filter((a) => a.type === 'city');
         </div>
       </div>
       <div class="group relative">
-        <a href="/products/" class="flex items-center gap-1 px-4 py-3 hover:text-red-600">Products <span class="text-xs">&#9662;</span></a>
-        <div class="invisible absolute left-0 top-full w-80 border-t-[3px] border-red-600 bg-white opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+        <a href="/products/" class="flex items-center gap-1 px-3.5 py-3 hover:text-red-600">Products <span class="text-xs">&#9662;</span></a>
+        <div class="invisible absolute left-0 top-full w-80 rounded-b-xl border border-blue-100 bg-white opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
           <ul class="py-2 text-base normal-case tracking-normal">
             {PRODUCTS.map((p) => <li><a class="block px-5 py-2.5 hover:bg-blue-50 hover:text-red-600" href={`/products/${p.slug}/`}>{p.name}</a></li>)}
             <li class="border-t border-blue-100"><a class="block px-5 py-2.5 text-red-600" href="/products/">View all products &rarr;</a></li>
@@ -36,21 +27,22 @@ const cities = AREAS.filter((a) => a.type === 'city');
         </div>
       </div>
       <div class="group relative">
-        <a href="/service-areas/" class="flex items-center gap-1 px-4 py-3 hover:text-red-600">Service Areas <span class="text-xs">&#9662;</span></a>
-        <div class="invisible absolute left-0 top-full w-[26rem] border-t-[3px] border-red-600 bg-white opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+        <a href="/service-areas/" class="flex items-center gap-1 px-3.5 py-3 hover:text-red-600">Service Areas <span class="text-xs">&#9662;</span></a>
+        <div class="invisible absolute left-0 top-full w-[26rem] rounded-b-xl border border-blue-100 bg-white opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
           <ul class="grid grid-cols-2 py-2 text-base normal-case tracking-normal">
             {cities.map((a) => <li><a class="block px-5 py-2 hover:bg-blue-50 hover:text-red-600" href={`/service-areas/${a.slug}/`}>{a.name}</a></li>)}
           </ul>
           <a class="block border-t border-blue-100 px-5 py-2.5 text-base normal-case tracking-normal text-red-600" href="/service-areas/">View all service areas &rarr;</a>
         </div>
       </div>
-      <a href="/who-we-work-with/" class="px-4 py-3 hover:text-red-600">Who We Serve</a>
-      <a href="/projects/" class="px-4 py-3 hover:text-red-600">Projects</a>
-      <a href="/about/" class="px-4 py-3 hover:text-red-600">About</a>
+      <a href="/who-we-work-with/" class="px-3.5 py-3 hover:text-red-600">Who We Serve</a>
+      <a href="/projects/" class="px-3.5 py-3 hover:text-red-600">Projects</a>
+      <a href="/about/" class="px-3.5 py-3 hover:text-red-600">About</a>
     </nav>
 
     <div class="flex items-center gap-3">
-      <a href="/contact/" class="btn btn-red hidden sm:inline-flex !py-2.5">Get an Estimate</a>
+      <a href={SITE.phoneHref} class="hidden whitespace-nowrap text-[0.95rem] font-semibold text-navy-900 2xl:block">{SITE.phone}</a>
+      <a href="/contact/" class="btn btn-red hidden whitespace-nowrap sm:inline-flex !py-2.5">Get an estimate</a>
       <button id="menu-btn" class="lg:hidden border-2 border-navy-900 p-2 text-navy-900" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
         <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
@@ -58,7 +50,7 @@ const cities = AREAS.filter((a) => a.type === 'city');
   </div>
 
   <div id="mobile-menu" class="hidden border-t border-blue-100 bg-white lg:hidden">
-    <div class="container-x max-h-[75vh] overflow-y-auto py-4 font-display text-xl font-semibold uppercase tracking-wide text-navy-900">
+    <div class="container-x max-h-[75vh] overflow-y-auto py-4 font-display text-xl font-semibold text-navy-900">
       <details class="border-b border-blue-100"><summary class="cursor-pointer py-3">Services</summary>
         <ul class="pb-3 text-base normal-case tracking-normal">{SERVICES.map((s) => <li><a class="block py-2 pl-3" href={`/services/${s.slug}/`}>{s.name}</a></li>)}<li><a class="block py-2 pl-3 text-red-600" href="/services/">All services &rarr;</a></li></ul></details>
       <details class="border-b border-blue-100"><summary class="cursor-pointer py-3">Products</summary>
@@ -68,7 +60,7 @@ const cities = AREAS.filter((a) => a.type === 'city');
       <a class="block border-b border-blue-100 py-3" href="/who-we-work-with/">Who We Serve</a>
       <a class="block border-b border-blue-100 py-3" href="/projects/">Projects</a>
       <a class="block border-b border-blue-100 py-3" href="/about/">About</a>
-      <a class="btn btn-red mt-4 w-full" href="/contact/">Get an Estimate</a>
+      <a class="btn btn-red mt-4 w-full" href="/contact/">Get an estimate</a>
     </div>
   </div>
 </header>
